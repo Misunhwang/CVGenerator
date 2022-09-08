@@ -26,7 +26,7 @@ app.get('/personalinfo', function(req, res, next) {
 	db.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log(result);
-		res.render('viewpersonalinfo', {title: 'View Personal Info', userInfo: result});
+		res.render('personalinfo', {title: 'View Personal Info', userInfo: result});
 	});
 });
 
@@ -47,7 +47,7 @@ app.post('/personalinfo', function(req, res, next) {
   db.query(sql, function(err, result) {
     if (err) throw err;
     console.log('record Updated');
-		res.redirect('/viewpersonalinfo');
+		res.redirect('/personalinfo');
   });
 });
 
