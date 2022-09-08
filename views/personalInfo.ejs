@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Personal Information</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="container menu-right">
+		<ul class="nav nav-tabs"
+      <li><a href="/">Personal Info</a></li>
+		</ul>
+	</div>
+
+  <div class="container">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active"><a href="/">Home</a></li>
+			<li><a href="/">View my Career</a></li>
+			<li><a href="/">Add Career</a></li>
+			<li><a href="/">Add Education</a></li>
+			<li><a href="/">Add Certification</a></li>
+			<li><a href="/">Add Role</a></li>
+			<li><a href="/">Map Role to Career</a></li>
+		</ul>
+	</div>
+  <h1>Personal Information</h1>
+  <button class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
+  <div>
+    <form method="POST">
+      <div class="form-group">
+        <label for="userid">User ID</label>
+        <input type="text" id="userid" name="userid" value="<%=userInfo[0].userid %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="firstname">First name</label>
+        <input type="text" id="firstname" name="firstname" value="<%=userInfo[0].firstname %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last name</label>
+        <input type="text" id="lastname" name="lastname" value="<%=userInfo[0].lastname %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone number</label>
+        <input type="text" id="phone" name="phone" value="<%=userInfo[0].phone %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="text" id="email" name="email" value="<%=userInfo[0].email %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="linkedin">Linkedin</label>
+        <input type="text" id="linkedin" name="linkedin" value="<%=userInfo[0].linkedin %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" value="<%=userInfo[0].website %>" disabled>
+      </div>
+      <div class="form-group">
+        <label for="objective">Objective</label>
+        <input type="textarea" rows="4" cols="100" id="objective" name="objective" value="<%=userInfo[0].objective %>" disabled>
+      </div>
+      <button type="submit" hidden="hidden" id="btnsave">Save</button>
+      <a href="javascript:cancelEdit()" hidden="hidden" id="btncancel">Cancel</a>
+    </form>
+    <button onclick="cancelEdit()" hidden="hidden" id="btncancel2">Cancel</button>
+  </div>
+
+  <script>
+    var phoneOrigin = "";
+    var emailOrigin = "";
+    var linkedinOrigin = "";
+    var websiteOrigin = "";
+    var objectiveOrigin = "";
+
+  function callEdit() {
+    phoneOrigin = document.getElementById("phone").value;
+    emailOrigin = document.getElementById("email").value;
+    linkedinOrigin = document.getElementById("linkedin").value;
+    websiteOrigin = document.getElementById("website").value;
+    objectiveOrigin = document.getElementById("objective").value;
+
+    //document.getElementById("userid").disabled = false;
+    document.getElementById("phone").disabled = false;
+    document.getElementById("email").disabled = false;
+    document.getElementById("linkedin").disabled = false;
+    document.getElementById("website").disabled = false;
+    document.getElementById("objective").disabled = false;
+    document.getElementById("btnsave").hidden = "";
+    document.getElementById("btncancel").hidden = "";
+    document.getElementById("btncancel2").hidden = "";
+    document.getElementById("btnedit").hidden = "hidden";
+  }
+  function cancelEdit() {
+    document.getElementById("phone").value = phoneOrigin;
+    document.getElementById("email").value = emailOrigin;
+    document.getElementById("linkedin").value = linkedinOrigin;
+    document.getElementById("website").value = websiteOrigin;
+    document.getElementById("objective").value = objectiveOrigin;
+
+    document.getElementById("phone").disabled = true;
+    document.getElementById("email").disabled = true;
+    document.getElementById("linkedin").disabled = true;
+    document.getElementById("website").disabled = true;
+    document.getElementById("objective").disabled = true;
+    document.getElementById("btnsave").hidden = "hidden";
+    document.getElementById("btncancel").hidden = "hidden";
+    document.getElementById("btncancel2").hidden = "hidden";
+    document.getElementById("btnedit").hidden = "";
+  }
+  </script>
+</body>
+</html>
