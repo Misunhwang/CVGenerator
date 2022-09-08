@@ -20,7 +20,7 @@ app.get('/', function(req, res, next) {
 	res.render('home', {title: 'Home'});
 });
 
-app.get('/viewpersonalinfo', function(req, res, next) {
+app.get('/personalinfo', function(req, res, next) {
 	var sql = `SELECT * FROM user WHERE userid="${userid}"`;
 	console.log(sql);
 	db.query(sql, function (err, result) {
@@ -30,7 +30,7 @@ app.get('/viewpersonalinfo', function(req, res, next) {
 	});
 });
 
-app.post('/viewpersonalinfo', function(req, res, next) {
+app.post('/personalinfo', function(req, res, next) {
   //var userid = req.body.userid;
   var phone = req.body.phone;
   var email = req.body.email;
