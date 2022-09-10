@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CV Generator</title>
+  <title>Add Role</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,6 +31,16 @@
 			<li><a href="/">Map Role to Career</a></li>
 		</ul>
 	</div>
-  <h1>CV Generator</h1>
+  <h1>Add Role</h1>
+  <div>
+    <form method="POST">
+      <div class="form-group">
+        <label for="role">Role Name</label>
+        <input type="text" id="role" name="role">
+      </div>
+      <button type="submit" id="btnsave">Save</button>
+      <button onclick="history.back()" id="btncancel">Cancel</button>
+    </form>
+  </div>
 </body>
 </html>

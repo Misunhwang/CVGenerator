@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Certification</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+  <div class="container menu-right">
+		<ul class="nav nav-tabs"
+      <li><a href="personalinfo">Personal Info</a></li>
+		</ul>
+	</div>
+
+  <div class="container">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active"><a href="/">Home</a></li>
+			<li><a href="/">View my Career</a></li>
+			<li><a href="/">Add Career</a></li>
+			<li><a href="addEducation">Add Education</a></li>
+			<li><a href="addCertification">Add Certification</a></li>
+			<li><a href="addRole">Add Role</a></li>
+			<li><a href="/">Map Role to Career</a></li>
+		</ul>
+	</div>
+  <h1>Add Certification</h1>
+  <div>
+    <form method="POST">
+      <input type="text" id="userid" name="userid" value="sunny" hidden>
+      <div class="form-group">
+        <label for="certification">Certification Name</label>
+        <input type="text" id="certification" name="certification">
+      </div>
+      <div class="form-group">
+        <label for="organization">Issued Organization</label>
+        <input type="text" id="organization" name="organization">
+      </div>
+      <div class="form-group">
+        <label id='issuedDate'>Issued Date</label>
+        <select name="issueMonth" id="issueMonth" aria-labelledby='issuedDate'>
+          <option value="month">--Month--</option>
+          <% for (var i =1; i <=12;  i++ ) { %>
+            <option value="<%=i %>"><%=i %></option>
+          <% } %>
+        </select>
+        <select name="issueYear" id="issueYear" aria-labelledby='issuedDate'>
+          <option value="year">--Year--</option>
+          <% for (var i =2022; i >= 1995;  i-- ) { %>
+            <option value="<%=i %>"><%=i %></option>
+            <%#  will output the numbers 2022-1995 %>
+          <% } %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description">
+      </div>
+      <button type="submit" id="btnsave">Save</button>
+      <button type="reset" onclick="history.go(-1)" id="btncancel">Cancel</button>
+    </form>
+  </div>
+</body>
+</html>
