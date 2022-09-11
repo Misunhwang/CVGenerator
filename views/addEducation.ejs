@@ -1,38 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Education</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+  <%- include('./partials/head'); %>
 </head>
-<body>
-  <div class="container menu-right">
-		<ul class="nav nav-tabs"
-      <li><a href="personalinfo">Personal Info</a></li>
-		</ul>
-	</div>
+<body class="container">
 
-  <div class="container">
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="active"><a href="/">Home</a></li>
-			<li><a href="/">View my Career</a></li>
-			<li><a href="/">Add Career</a></li>
-			<li><a href="addEducation">Add Education</a></li>
-			<li><a href="addCertification">Add Certification</a></li>
-			<li><a href="addRole">Add Role</a></li>
-			<li><a href="/">Map Role to Career</a></li>
-		</ul>
-	</div>
-  <h1>Add Education</h1>
-  <div>
+<header>
+  <%- include('./partials/header'); %>
+</header>
+
+<main>
+  <div class="jumbotron">
+    <h2>Add Education</h2>
     <form name="eduForm" method="POST" onsubmit="return validateForm()">
       <input type="text" id="userid" name="userid" value="sunny" hidden>
       <div class="form-group">
@@ -93,6 +72,7 @@
       <button type="reset" onclick="history.go(-1)" id="btncancel">Cancel</button>
     </form>
   </div>
+</main>
 
   <script>
   function checkNotFinish() {
@@ -109,38 +89,33 @@
   }
 
   function validateForm() {
-    alert("call");
     var eYear = document.getElementById("endYear").value;
     var eMonth = document.getElementById("endMonth").value;
     var sYear = document.getElementById("startYear").value;
     var sMonth = document.getElementById("startMonth").value;
     var isContinue = document.getElementById("notFinish").checked;
 
-    alert(sYear + " : " + sMonth + " : " + eYear + " : " + eMonth);
-
     if(sYear == "year" || sMonth == "month") {
-      alert("Please select the correct date.");
+      alert("Please select the correct start date.");
       return false;
     }
 
     if(!isContinue) {
       if(eYear == "year" || eMonth == "month") {
-        alert("Please select the correct date.");
+        alert("Please select the correct end date.");
         return false;
       }
 
       if(eYear < sYear) {
-        alert("End date must be later than start date.");
+        alert("End year must be later than start year.");
         return false;
-      } elseif (eYear == sYear) {
-
-        if(eMonth < sMonth) {
-          alert("End date must be later than start date.");
-          return false;
+      } else {
+        if (eYear == sYear && eMonth < sMonth) {
+            alert("End month must be later than start month.");
+            return false;
         }
       }
     }
-    return true;
   }
   </script>
 </body>

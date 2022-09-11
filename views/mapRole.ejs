@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('./partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('./partials/header'); %>
+</header>
+
+<main>
+  <div class="jumbotron">
+    <h2>Map Role to Career</h2>
+    <form name="mapForm" method="POST" onsubmit="return validateForm()">
+      <input type="text" id="userid" name="userid" value="sunny" hidden>
+      <div class="form-group">
+        <label for="role">Role Title</label>
+        <select name="role" id="role">
+          <option value="0">-- SELECT --</option>
+          <% rolelist.forEach(function(role) { %>
+            <option value="<%=role.roleid %>"><%=role.rolename %></option>
+          <% }); %>
+        </select>
+      </div>
+
+      <fieldset>
+          <legend>Choose Careers to map</legend>
+          <% joblist.forEach(function(job) { %>
+            <input type="checkbox" name="jobrole" value="<%=job.jobid %>">
+            <br>
+            <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)<br>
+            <%=job.description %><br>
+            <%=job.detail1 %><br>
+            <%=job.skills %>
+            <p></p>
+          <% }); %>
+      </fieldset>
+
+      <button type="submit" id="btnsave">Save</button>
+      <button type="reset" onclick="history.go(-1)" id="btncancel">Cancel</button>
+    </form>
+  </div>
+</main>
+
+  <script>
+  function checkNotFinish() {
+    var isContinue = document.getElementById("notFinish").checked;
+    if(isContinue) {
+      document.getElementById("endMonth").disabled = true;
+      document.getElementById("endYear").disabled = true;
+    } else {
+      document.getElementById("endMonth").disabled = false;
+      document.getElementById("endYear").disabled = false;
+    }
+  }
+
+  function validateForm() {
+    var eYear = document.getElementById("endYear").value;
+    var eMonth = document.getElementById("endMonth").value;
+    var sYear = document.getElementById("startYear").value;
+    var sMonth = document.getElementById("startMonth").value;
+    var isContinue = document.getElementById("notFinish").checked;
+
+    if(sYear == "year" || sMonth == "month") {
+      alert("Please select the correct start date.");
+      return false;
+    }
+
+    if(!isContinue) {
+      if(eYear == "year" || eMonth == "month") {
+        alert("Please select the correct end date.");
+        return false;
+      }
+
+      if(eYear < sYear) {
+        alert("End year must be later than start year.");
+        return false;
+      } else {
+        if (eYear == sYear && eMonth < sMonth) {
+            alert("End month must be later than start month.");
+            return false;
+        }
+      }
+    }
+  }
+  </script>
+</body>
+</html>
