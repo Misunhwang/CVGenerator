@@ -61,14 +61,257 @@ app.get('/mapRole', function(req, res, next) {
 	console.log(sql);
 	db.query(sql, function (err, resultRole) {
 		if (err) throw err;
-		console.log(resultRole);
+		//console.log(resultRole);
 
-		sql = `SELECT * FROM job WHERE userid="${userid}"`;
+//		sql = `SELECT * FROM job WHERE userid="${userid}"`;
+		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
+					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
+					`INNER JOIN role ON jobrole.roleid = role.roleid;`;
+		console.log(sql);
+		db.query(sql, function (err, resultJob) {
+			if (err) throw err;
+			//console.log(resultJob);
+
+/*
+			var jobSet = new Set();
+
+
+			Object.keys(resultJob).forEach(function(key) {
+				console.log(key);
+	      var row = resultJob[key];
+
+//				var subrolevalues = "";
+
+//				get_subrole(row.jobid, function(result) {
+//					subrolevalues = result;
+//					console.log("result : " + result);
+//				});
+//				console.log("subrolevalues : " + subrolevalues);
+
+
+	      console.log(row.jobid + "----------------------");
+				sql = `select role.* from role inner join jobrole on role.roleid=jobrole.roleid and jobid=${row.jobid} and ismain=0`;
+				console.log(sql);
+				row.subroles = db.query(sql, function (err, result, next) {
+					if (err) throw err;
+					console.log(result);
+
+					txt = "";
+					if(result.length > 0) {
+						if(result.length == 1) {
+							txt = result[0].rolename;
+						}
+						else {
+							for(var i=0; i<result.length-1; i++) {
+								txt += result[i].rolename + ",";
+							}
+							txt += result[result.length-1].rolename;
+						}
+					}
+
+					return txt;
+
+					//console.log("txt in : " + txt);
+				});
+
+				//console.log("txt out : " + txt);
+				row.subroles = subrolevalues;
+				jobSet.add(row);
+
+			});
+
+			console.log("jobSet.....");
+			console.log(jobSet);
+*/
+
+			sql = `SELECT jobrole.jobid, jobrole.ismain, jobrole.roleid, role.rolename ` +
+						`FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" ` +
+						`inner join role WHERE jobrole.roleid = role.roleid order by 1, 2 desc;`;
+			console.log(sql);
+			db.query(sql, function (err, resultJobrole) {
+				if (err) throw err;
+				//console.log(resultJobrole);
+				res.render('mapRole', {title: 'Map Role to Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
+			});
+
+			//res.render('mapRole', {title: 'Map Role to Career', rolelist: resultRole, joblist: jobSet});
+		});
+	});
+});
+
+/*
+function get_subrole(jobid, callback) {
+	console.log(jobid + "----------------------");
+	var sql0 = `select role.* from role inner join jobrole on role.roleid=jobrole.roleid and jobid=${jobid} and ismain=0`;
+	console.log(sql0);
+	db.query(sql0, function (err, result) {
+		if (err) throw err;
+		console.log(result);
+
+		var txt = "";
+		if(result.length > 0) {
+			if(result.length == 1) {
+				txt = result[0].rolename;
+			}
+			else {
+				for(var i=0; i<result.length-1; i++) {
+					txt += result[i].rolename + ",";
+				}
+				txt += result[result.length-1].rolename;
+			}
+		}
+
+		console.log("txt in get_subrole : " + txt);
+		return callback(txt);
+
+	});
+}
+*/
+
+app.get('/viewCareer', function(req, res, next) {
+	var selectedrole = req.query.roleid;
+
+	if(typeof selectedrole == "string") {
+		selectedrole = Number(selectedrole);
+	} else {
+		selectedrole = 0;
+	}
+
+	var sql = `SELECT * FROM role`;
+	console.log(sql);
+	db.query(sql, function (err, resultRole) {
+		if (err) throw err;
+		//console.log(resultRole);
+
+		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
+					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
+					`INNER JOIN role ON jobrole.roleid = role.roleid`;
+		if(selectedrole > 0) {
+			sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
+			//sql += ` AND jobrole.roleid = ${selectedrole}`;
+		}
 		console.log(sql);
 		db.query(sql, function (err, resultJob) {
 			if (err) throw err;
 			console.log(resultJob);
-			res.render('mapRole', {title: 'Map Role to Career', rolelist: resultRole, joblist: resultJob});
+
+ 			sql = `SELECT jobrole.jobid, jobrole.ismain, jobrole.roleid, role.rolename ` +
+						`FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" ` +
+						`inner join role ON jobrole.roleid = role.roleid`;
+			if(selectedrole > 0) {
+				sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
+				//sql += ` AND jobrole.roleid = ${selectedrole}`;
+			}
+			sql += ` order by 1, 2 desc`;
+			console.log(sql);
+			db.query(sql, function (err, resultJobrole) {
+				if (err) throw err;
+				console.log(resultJobrole);
+
+				sql = `SELECT * FROM education WHERE userid="${userid}" `;
+				console.log(sql);
+				db.query(sql, function (err, resultEducation) {
+					if (err) throw err;
+					console.log(resultEducation);
+
+					sql = `SELECT * FROM certification WHERE userid="${userid}" `;
+					console.log(sql);
+					db.query(sql, function (err, resultCertification) {
+						if (err) throw err;
+						console.log(resultCertification);
+						res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation, certificationlist: resultCertification, selectedrole: selectedrole});
+					});
+
+					//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation});
+				});
+
+				//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
+			});
+		});
+	});
+});
+
+app.get('/previewCV', function(req, res, next) {
+	var selectedrole = req.query.roleid;
+
+	if(typeof selectedrole == "string") {
+		selectedrole = Number(selectedrole);
+	} else {
+		selectedrole = 0;
+	}
+
+	var sql = `SELECT * FROM user where userid="${userid}"`;
+	console.log(sql);
+	db.query(sql, function (err, resultUser) {
+		if (err) throw err;
+		console.log(resultUser);
+
+		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
+					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
+					`INNER JOIN role ON jobrole.roleid = role.roleid`;
+		if(selectedrole > 0) {
+			sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
+			//sql += ` AND jobrole.roleid = ${selectedrole}`;
+		}
+		console.log(sql);
+		db.query(sql, function (err, resultJob) {
+			if (err) throw err;
+			console.log(resultJob);
+
+ 			sql = `SELECT jobrole.jobid, jobrole.ismain, jobrole.roleid, role.rolename ` +
+						`FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" ` +
+						`inner join role ON jobrole.roleid = role.roleid`;
+			if(selectedrole > 0) {
+				sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
+				//sql += ` AND jobrole.roleid = ${selectedrole}`;
+			}
+			sql += ` order by 1, 2 desc`;
+			console.log(sql);
+			db.query(sql, function (err, resultJobrole) {
+				if (err) throw err;
+				console.log(resultJobrole);
+
+				sql = `SELECT * FROM education WHERE userid="${userid}" `;
+				console.log(sql);
+				db.query(sql, function (err, resultEducation) {
+					if (err) throw err;
+					console.log(resultEducation);
+
+					sql = `SELECT * FROM certification WHERE userid="${userid}" `;
+					console.log(sql);
+					db.query(sql, function (err, resultCertification) {
+						if (err) throw err;
+						console.log(resultCertification);
+
+						sql = `SELECT distinct skill FROM jobskill WHERE userid="${userid}" `;
+						console.log(sql);
+						db.query(sql, function (err, resultSkill) {
+							if (err) throw err;
+							console.log(resultSkill);
+
+							sql = `SELECT rolename FROM role WHERE roleid="${selectedrole}" `;
+							console.log(sql);
+							db.query(sql, function (err, resultRole) {
+								if (err) throw err;
+								console.log(resultRole);
+								res.render('previewCV', {title: 'Preview CV', personalInfo: resultUser[0],
+																															joblist: resultJob,
+																															jobrolelist: resultJobrole,
+																															educationlist: resultEducation,
+																															certificationlist: resultCertification,
+																															skilllist: resultSkill,
+																															selectedrole: resultRole[0].rolename});
+							});
+						});
+
+						//res.render('previewCV', {title: 'Preview CV', personalInfo: resultUser, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation, certificationlist: resultCertification, selectedrole: selectedrole});
+					});
+
+					//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation});
+				});
+
+				//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
+			});
 		});
 	});
 });
@@ -291,6 +534,169 @@ app.post('/addCareer', function(req, res, next) {
 
 		res.render('home');
 	});
+});
+
+app.post('/mapRole', function(req, res, next) {
+	var userid = req.body.userid;
+	var roleid = req.body.role;
+	var rolejoblist = req.body.jobrole;
+	var sql = "";
+
+	console.log("selected role.... " + roleid);
+	console.log("selected role's job.... " + rolejoblist);
+	console.log("typeof role's job.... " + typeof rolejoblist);
+	console.log(rolejoblist);
+
+	var rolejobArray = [];
+
+	if(typeof rolejoblist == "object") { //if checked is two or more
+		rolejoblist.forEach(function(jobid) {
+			rolejobArray.push(Number(jobid));
+		});
+	} else {
+		if(typeof rolejoblist == "string") { //if checked is one
+			rolejobArray.push(Number(rolejoblist));
+		}
+	}
+
+	//console.log(rolejobArray);
+
+/*
+	var temp = "1,2,3,";
+	var testArray = temp.split(",");
+	console.log(testArray.length);
+	testArray = testArray.slice(0, -1);
+	console.log(testArray.length);
+	console.log(testArray);
+*/
+
+	sql = `SELECT jobrole.jobid FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" and jobrole.roleid = ${roleid}`;
+
+	console.log(sql);
+	db.query(sql, function(err, result) {
+		if (err) throw err;
+
+		var resultjobArray = [];
+		for(var i=0; i<result.length; i++) {
+			console.log(result[i].jobid + "----------");
+			resultjobArray.push(result[i].jobid);
+
+			//if result value doesn't exist in rolejobArray, it means user wants to delete relation job & role
+			if(!rolejobArray.includes(result[i].jobid)) {
+				sql = `DELETE FROM jobrole WHERE jobid = ${result[i].jobid} AND roleid = ${roleid} `;
+				console.log(sql);
+				db.query(sql, function(err2, result2) {
+					if (err2) throw err2;
+					console.log("Delete is successful");
+				});
+			}
+		}
+
+		for(var j=0; j<rolejobArray.length; j++) {
+			console.log(rolejobArray[j] + "----------");
+
+			//if result value doesn't exist in rolejobArray, it means user wants to add relation job & role
+			if(!resultjobArray.includes(rolejobArray[j])) {
+				sql = `INSERT INTO jobrole (jobid, roleid, ismain) VALUES (${rolejobArray[j]}, ${roleid}, 0)`;
+				console.log(sql);
+				db.query(sql, function(err2, result2) {
+					if (err2) throw err2;
+					console.log("Insert is successful");
+				});
+			}
+		}
+
+		res.render('home');
+	});
+});
+
+app.post('/viewCareer', function(req, res, next) {
+	var userid = req.body.userid;
+	var roleid = req.body.role;
+	var formname = req.body.formname;
+	var buttonname = req.body.submit;
+
+	console.log(userid + " : " + roleid + " : " + formname + " : " + buttonname);
+
+	if(formname == "searchForm") {
+		if(buttonname == "search") {
+			res.redirect('/viewCareer?roleid=' + roleid);
+		} else if (buttonname == "preview") {
+			res.redirect('/previewCV?roleid=' + roleid);
+		}
+	}
+	/*
+
+	var rolejoblist = req.body.jobrole;
+	var sql = "";
+
+	console.log("selected role.... " + roleid);
+	console.log("selected role's job.... " + rolejoblist);
+	console.log("typeof role's job.... " + typeof rolejoblist);
+	console.log(rolejoblist);
+
+	var rolejobArray = [];
+
+	if(typeof rolejoblist == "object") { //if checked is two or more
+		rolejoblist.forEach(function(jobid) {
+			rolejobArray.push(Number(jobid));
+		});
+	} else {
+		if(typeof rolejoblist == "string") { //if checked is one
+			rolejobArray.push(Number(rolejoblist));
+		}
+	}
+*/
+	//console.log(rolejobArray);
+
+/*
+	var temp = "1,2,3,";
+	var testArray = temp.split(",");
+	console.log(testArray.length);
+	testArray = testArray.slice(0, -1);
+	console.log(testArray.length);
+	console.log(testArray);
+*/
+/*
+	sql = `SELECT jobrole.jobid FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" and jobrole.roleid = ${roleid}`;
+
+	console.log(sql);
+	db.query(sql, function(err, result) {
+		if (err) throw err;
+
+		var resultjobArray = [];
+		for(var i=0; i<result.length; i++) {
+			console.log(result[i].jobid + "----------");
+			resultjobArray.push(result[i].jobid);
+
+			//if result value doesn't exist in rolejobArray, it means user wants to delete relation job & role
+			if(!rolejobArray.includes(result[i].jobid)) {
+				sql = `DELETE FROM jobrole WHERE jobid = ${result[i].jobid} AND roleid = ${roleid} `;
+				console.log(sql);
+				db.query(sql, function(err2, result2) {
+					if (err2) throw err2;
+					console.log("Delete is successful");
+				});
+			}
+		}
+
+		for(var j=0; j<rolejobArray.length; j++) {
+			console.log(rolejobArray[j] + "----------");
+
+			//if result value doesn't exist in rolejobArray, it means user wants to add relation job & role
+			if(!resultjobArray.includes(rolejobArray[j])) {
+				sql = `INSERT INTO jobrole (jobid, roleid, ismain) VALUES (${rolejobArray[j]}, ${roleid}, 0)`;
+				console.log(sql);
+				db.query(sql, function(err2, result2) {
+					if (err2) throw err2;
+					console.log("Insert is successful");
+				});
+			}
+		}
+
+		res.render('home');
+	});
+	*/
 });
 
 app.listen(5500);

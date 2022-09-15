@@ -12,11 +12,11 @@
 <main>
   <div class="jumbotron">
     <h2>Map Role to Career</h2>
-    <form name="mapForm" method="POST" onsubmit="return validateForm()">
+    <form name="mapForm" method="POST">
       <input type="text" id="userid" name="userid" value="sunny" hidden>
       <div class="form-group">
         <label for="role">Role Title</label>
-        <select name="role" id="role">
+        <select name="role" id="role" onChange="checkRole()">
           <option value="0">-- SELECT --</option>
           <% rolelist.forEach(function(role) { %>
             <option value="<%=role.roleid %>"><%=role.rolename %></option>
@@ -27,16 +27,23 @@
       <fieldset>
           <legend>Choose Careers to map</legend>
           <% joblist.forEach(function(job) { %>
-            <input type="checkbox" name="jobrole" value="<%=job.jobid %>">
-            <br>
-            <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)<br>
-            <%=job.description %><br>
-            <%=job.detail1 %><br>
-            <%=job.skills %>
-            <p></p>
+            <div class="form-group2">
+              <input type="checkbox" name="jobrole" id="<%=job.jobid %>" value="<%=job.jobid %>">
+              <br>
+              <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)</h3><br>
+              <h4>■ <%=job.description %></h4><br>
+              ▪ <%=job.detail1 %><br>
+              ▪ Skills: <%=job.skills %><br>
+              ▪ Sub Roles:
+              <% jobrolelist.forEach(function(jobrole) { %>
+                <% if(job.jobid == jobrole.jobid && jobrole.ismain == 0) { %>
+                  [<%=jobrole.rolename %>]
+                <% } %>
+              <% }); %>
+              <p></p>
+            </div>
           <% }); %>
       </fieldset>
-
       <button type="submit" id="btnsave">Save</button>
       <button type="reset" onclick="history.go(-1)" id="btncancel">Cancel</button>
     </form>
@@ -44,15 +51,18 @@
 </main>
 
   <script>
-  function checkNotFinish() {
-    var isContinue = document.getElementById("notFinish").checked;
-    if(isContinue) {
-      document.getElementById("endMonth").disabled = true;
-      document.getElementById("endYear").disabled = true;
-    } else {
-      document.getElementById("endMonth").disabled = false;
-      document.getElementById("endYear").disabled = false;
-    }
+  function checkRole() {
+    var selectRole = document.getElementById("role").value;
+
+    <% joblist.forEach(function(job) { %>
+      document.getElementById("<%=job.jobid %>").checked = false;
+    <% }); %>
+
+    <% jobrolelist.forEach(function(jobrole) { %>
+      if(selectRole == "<%=jobrole.roleid %>") {
+        document.getElementById("<%=jobrole.jobid %>").checked = true;
+      }
+    <% }); %>
   }
 
   function validateForm() {

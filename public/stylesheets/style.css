@@ -1,5 +1,6 @@
-.menu-right{
-  justify-content: right;
-  margin: 0.5cm 1cm 0.5cm 0.5cm;
-  background-color: yellow;
+.form-group2 {
+  border-radius: 20px;
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 30px;
 }
