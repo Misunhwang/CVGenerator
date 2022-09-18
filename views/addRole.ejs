@@ -12,14 +12,19 @@
 <main>
   <div class="jumbotron">
     <h2>Add Role</h2>
-    <form method="POST">
-      <div class="form-group">
-        <label for="role">Role Name</label>
-        <input type="text" id="role" name="role">
-      </div>
-      <button type="submit" id="btnsave">Save</button>
-      <button onclick="history.back()" id="btncancel">Cancel</button>
-    </form>
+    <div class="container3">
+      <form method="POST">
+        <div class="form-group">
+          <label for="role">Role Name</label>
+          <input type="text" id="role" name="role">
+        </div>
+        <div class="button-group">
+          <button type="submit" id="btnsave" class="btn btn-primary">Save</button>
+          <button onclick="history.back()" id="btncancel" class="btn btn-primary">Cancel</button>
+        </div>
+      </form>      
+    </div>
+
   </div>
 </main>
 </body>

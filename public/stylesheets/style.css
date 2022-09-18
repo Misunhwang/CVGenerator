@@ -1,3 +1,7 @@
+.form-group {
+  width: 100%;
+}
+
 .form-group2 {
   border-radius: 20px;
   background-color: white;
@@ -5,13 +9,35 @@
   margin-bottom: 30px;
 }
 
+.form-group3 {
+  border-radius: 20px;
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 30px;
+  width:90%;
+}
+
+.checkbox-group {
+  width:100%;
+}
+
+.checkbox-item {
+  width:5%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  width: 95%;
+}
+
+.btn-primary {
+  margin-left:10px;
+}
+
 body {
   background-image: url("/images/career-image11.jpg");
   background-size: 100%;
-}
-
-main {
-  float:left;
 }
 
 .container {
@@ -27,6 +53,22 @@ main {
   padding: 0.5cm;
 }
 
+.container3 {
+  background-color: white;
+  border-radius: 20px;
+  margin-bottom: 0.5cm;
+  padding: 0.5cm;
+  border: 1px solid #dbdddf;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.container .jumbotron {
+  padding-top: 10px;
+  padding-left: 10px;
+  background-color: #f6f6f7;
+}
+
 #twodividebox {
 	float:left;
 	width:47%;
@@ -39,4 +81,52 @@ main {
   text-align: center;
   margin: 0.5cm;
   padding: 0.3cm;
+}
+
+label {
+  font-size: 15px;
+  font-weight: 400px;
+  margin: 10px 0 10px 0;
+  text-align: left;
+  width: 25%;
+}
+
+input {
+  width: 70%;
+  border: 1px solid #c9ccd0;
+}
+
+textarea {
+  width: 70%;
+  border: 1px solid #c9ccd0;
+}
+
+select {
+  border: 1px solid #c9ccd0;
+}
+
+.select-role {
+  width: 200px;
+}
+
+.label-checkbox {
+  font-size: 15px;
+  font-weight: 400px;
+  margin: 10px 0 10px 0;
+  text-align: left;
+  width: 250px;
+}
+
+.input-checkbox {
+  width: 30px;
+}
+
+.label-radio {
+  font-size: 15px;
+  text-align: left;
+  width: 80px;
+}
+
+.input-radio {
+  width: 15px;
 }
