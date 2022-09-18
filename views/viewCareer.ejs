@@ -38,9 +38,9 @@
 
     <legend>Work Experience</legend>
     <div class="jumbotron">
-      <form method="POST" onsubmit="callSubmit()">
-        <input type="text" id="formname" name="formname" value="careerForm" hidden>
-        <% joblist.forEach(function(job) { %>
+      <% joblist.forEach(function(job) { %>
+        <form method="POST" onsubmit="callSubmit()">
+          <input type="text" id="formname" name="formname" value="careerForm" hidden>
           <div class="form-group2">
             <input type="text" id="jobid" name="jobid" value="<%=job.jobid %>" hidden>
             <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)</h3><br>
@@ -55,17 +55,17 @@
             <% }); %>
             <p></p>
             <button name="submit" value="editWork" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteWork" class="btn btn-primary" onclick="callDelete()" id="btndelete">Delete</button>
+            <button name="submit" value="deleteWork" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
           </div>
-        <% }); %>
-      </form>
+        </form>
+      <% }); %>
     </div>
 
     <legend>Education</legend>
     <div class="jumbotron">
-      <form method="POST" onsubmit="callSubmit()">
-        <input type="text" id="formname" name="formname" value="educationForm" hidden>
-        <% educationlist.forEach(function(education) { %>
+      <% educationlist.forEach(function(education) { %>
+        <form method="POST" onsubmit="callSubmit()">
+          <input type="text" id="formname" name="formname" value="educationForm" hidden>
           <div class="form-group2">
             <input type="text" id="educationid" name="educationid" value="<%=education.educationid %>" hidden>
             <h3><%=education.coursename %> <%=education.degree %> (<%=education.startyear %>.<%=education.startmonth %>)</h3><br>
@@ -74,17 +74,17 @@
             ▪ Special Things : <%=education.special %><br>
             <p></p>
             <button name="submit" value="editEducation" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteEducation" class="btn btn-primary" onclick="callDelete()" id="btndelete">Delete</button>
+            <button name="submit" value="deleteEducation" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
           </div>
-        <% }); %>
-      </form>
+        </form>
+      <% }); %>
     </div>
 
     <legend>Certification</legend>
     <div class="jumbotron">
-      <form method="POST" onsubmit="callSubmit()">
-        <input type="text" id="formname" name="formname" value="certificationForm" hidden>
-        <% certificationlist.forEach(function(certification) { %>
+      <% certificationlist.forEach(function(certification) { %>
+        <form method="POST" onsubmit="callSubmit()">
+          <input type="text" id="formname" name="formname" value="certificationForm" hidden>
           <div class="form-group2">
             <input type="text" id="certificationid" name="certificationid" value="<%=certification.certificationid %>" hidden>
             <h3><%=certification.certificationname %> (<%=certification.issueyear %>.<%=certification.issuemonth %>)</h3><br>
@@ -92,10 +92,10 @@
             ▪ Description : <%=certification.description %><br>
             <p></p>
             <button name="submit" value="editCertification" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteCertification" class="btn btn-primary" onclick="callDelete()" id="btndelete">Delete</button>
+            <button name="submit" value="deleteCertification" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
           </div>
-        <% }); %>
-      </form>
+        </form>
+      <% }); %>
     </div>
 
   </div>
@@ -116,8 +116,9 @@
     <% }); %>
   }
 
-  function callSubmit() {
-
+  function callDelete() {
+    return confirm("Are you sure to delete?");
+    //return false;
   }
 
   function validateForm() {
