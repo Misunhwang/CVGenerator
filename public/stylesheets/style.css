@@ -4,3 +4,39 @@
   padding: 15px;
   margin-bottom: 30px;
 }
+
+body {
+  background-image: url("/images/career-image11.jpg");
+  background-size: 100%;
+}
+
+main {
+  float:left;
+}
+
+.container {
+  padding-top: 0.2cm;
+}
+
+.container2 {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border-radius: 20px;
+  margin-bottom: 0.5cm;
+  padding: 0.5cm;
+}
+
+#twodividebox {
+	float:left;
+	width:47%;
+}
+
+#buttonbox {
+  background-color: white;
+  border: 10px solid #6cbad0;
+  border-radius: 40px;
+  text-align: center;
+  margin: 0.5cm;
+  padding: 0.3cm;
+}

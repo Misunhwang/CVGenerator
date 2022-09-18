@@ -3,21 +3,40 @@
 <head>
   <%- include('./partials/head'); %>
 </head>
-<style>
-  body {
-    background-image: url("images/portfolio-background2.png");
-    background-size: 100%;
-  }
-</style>
-
 <body class="container">
 
 <header>
   <%- include('./partials/header'); %>
 </header>
 
-<main class="home-main">
-  <h1>CV Generator</h1>
+<main>
+  <div class="container2">
+    <a href="/viewCareer">
+        <img src="images/career-image12.jpg" width="100%">
+    </a>
+  </div>
+  <div>
+    <table width="100%">
+      <tr>
+        <td width="33%">
+          <div id ="buttonbox">
+            <a href="/addCareer"><h2>Add Career</h2></a>
+    	    </div>
+        </td>
+        <td width="33%">
+          <div id ="buttonbox">
+            <a href="/addEducation"><h2>Add Education</h2></a>
+    	    </div>
+        </td>
+        <td width="33%">
+          <div id ="buttonbox">
+            <a href="/addCertification"><h2>Add Certification</h2></a>
+    	    </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
 </main>
 </body>
 </html>
