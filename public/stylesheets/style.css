@@ -19,6 +19,7 @@
 
 .checkbox-group {
   width:100%;
+  display: inline;
 }
 
 .checkbox-item {

@@ -14,25 +14,26 @@
     <div class="jumbotron">
       <h2>View My Career</h2>
       <form method="POST" onsubmit="callSubmit()">
-        <input type="text" id="formname" name="formname" value="searchForm" hidden>
-        <input type="text" id="userid" name="userid" value="sunny" hidden>
-        <input type="text" id="rolefromserver" name="rolefromserver" value="<%=selectedrole %>" hidden>
-        <div class="form-group">
-          <label for="role">Role Title</label>
-          <select name="role" id="role" onChange="checkRole()">
-            <option value="0">-- All --</option>
-            <% rolelist.forEach(function(role) { %>
-              <% if(role.roleid == Number(selectedrole)) { %>
-                <option value="<%=role.roleid %>" selected><%=role.rolename %></option>
-              <% } else { %>
-                <option value="<%=role.roleid %>"><%=role.rolename %></option>
-              <% } %>
-            <% }); %>
-          </select>
+        <div class="container3">
+          <input type="text" id="formname" name="formname" value="searchForm" hidden>
+          <input type="text" id="userid" name="userid" value="sunny" hidden>
+          <input type="text" id="rolefromserver" name="rolefromserver" value="<%=selectedrole %>" hidden>
+          <div class="form-group">
+            <label for="role">Role Title</label>
+            <select name="role" id="role" onChange="checkRole()" class="select-role">
+              <option value="0">-- All --</option>
+              <% rolelist.forEach(function(role) { %>
+                <% if(role.roleid == Number(selectedrole)) { %>
+                  <option value="<%=role.roleid %>" selected><%=role.rolename %></option>
+                <% } else { %>
+                  <option value="<%=role.roleid %>"><%=role.rolename %></option>
+                <% } %>
+              <% }); %>
+            </select>
+            <button name="submit" value="search" onclick="callSearch()" id="btnsearch">Search</button>
+            <button name="submit" value="preview" onclick="callPreview()" id="btnpreview">Preview CV</button>
+          </div>
         </div>
-
-        <button name="submit" value="search" class="btn btn-primary" onclick="callSearch()" id="btnsearch">Search</button>
-        <button name="submit" value="preview" class="btn btn-primary" onclick="callPreview()" id="btnpreview">Preview CV</button>
       </form>
     </div>
 
@@ -54,8 +55,10 @@
               <% } %>
             <% }); %>
             <p></p>
-            <button name="submit" value="editWork" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteWork" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            <div class="button-group">
+              <button name="submit" value="editWork" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
+              <button name="submit" value="deleteWork" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            </div>
           </div>
         </form>
       <% }); %>
@@ -73,8 +76,10 @@
             ▪ Grade : <%=education.grade %><br>
             ▪ Special Things : <%=education.special %><br>
             <p></p>
-            <button name="submit" value="editEducation" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteEducation" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            <div class="button-group">
+              <button name="submit" value="editEducation" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
+              <button name="submit" value="deleteEducation" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            </div>
           </div>
         </form>
       <% }); %>
@@ -91,8 +96,10 @@
             ▪ Issued Organization : <%=certification.organization %><br>
             ▪ Description : <%=certification.description %><br>
             <p></p>
-            <button name="submit" value="editCertification" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-            <button name="submit" value="deleteCertification" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            <div class="button-group">
+              <button name="submit" value="editCertification" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
+              <button name="submit" value="deleteCertification" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
+            </div>
           </div>
         </form>
       <% }); %>

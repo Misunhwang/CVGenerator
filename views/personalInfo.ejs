@@ -12,46 +12,48 @@
 <main>
   <div class="jumbotron">
     <h2>Personal Information</h2>
-    <button class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
-    <div class="container3">
-      <form method="POST">
-        <div class="form-group">
-          <label for="userid">User ID</label>
-          <input type="text" id="userid" name="userid" value="<%=userInfo[0].userid %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="firstname">First name</label>
-          <input type="text" id="firstname" name="firstname" value="<%=userInfo[0].firstname %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="lastname">Last name</label>
-          <input type="text" id="lastname" name="lastname" value="<%=userInfo[0].lastname %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone number</label>
-          <input type="text" id="phone" name="phone" value="<%=userInfo[0].phone %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input type="text" id="email" name="email" value="<%=userInfo[0].email %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="linkedin">Linkedin</label>
-          <a href="https://<%=userInfo[0].linkedin %>"><input type="text" id="linkedin" name="linkedin" value="<%=userInfo[0].linkedin %>" disabled></a>
-        </div>
-        <div class="form-group">
-          <label for="website">Website</label>
-          <input type="text" id="website" name="website" value="<%=userInfo[0].website %>" disabled>
-        </div>
-        <div class="form-group">
-          <label for="objective">Objective</label>
-          <input type="textarea" rows="4" cols="100" id="objective" name="objective" value="<%=userInfo[0].objective %>" disabled>
-        </div>
-        <button type="submit" hidden="hidden" id="btnsave">Save</button>
-        <a href="javascript:cancelEdit()" hidden="hidden" id="btncancel">Cancel</a>
-      </form>
-      <button onclick="cancelEdit()" hidden="hidden" id="btncancel2">Cancel</button>      
-    </div>
+
+      <button class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
+      <div class="container3">
+        <form method="POST">
+          <div class="form-group">
+            <label for="userid">User ID</label>
+            <input type="text" id="userid" name="userid" value="<%=userInfo[0].userid %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="firstname">First name</label>
+            <input type="text" id="firstname" name="firstname" value="<%=userInfo[0].firstname %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Last name</label>
+            <input type="text" id="lastname" name="lastname" value="<%=userInfo[0].lastname %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="text" id="phone" name="phone" value="<%=userInfo[0].phone %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="text" id="email" name="email" value="<%=userInfo[0].email %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="linkedin">Linkedin</label>
+            <a href="https://<%=userInfo[0].linkedin %>"><input type="text" id="linkedin" name="linkedin" value="<%=userInfo[0].linkedin %>" disabled></a>
+          </div>
+          <div class="form-group">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" value="<%=userInfo[0].website %>" disabled>
+          </div>
+          <div class="form-group">
+            <label for="objective">Objective</label>
+            <textarea rows="4" cols="100" id="objective" name="objective" value="<%=userInfo[0].objective %>" disabled><%=userInfo[0].objective %></textarea>
+          </div>
+          <div class="button-group">
+            <button type="submit" hidden="hidden" id="btnsave" class="btn btn-primary">Save</button>
+            <button onclick="cancelEdit();" hidden="hidden" id="btncancel" class="btn btn-primary">Cancel</button>
+          </div>
+        </form>
+      </div>
 
   </div>
 </main>
@@ -78,7 +80,6 @@
     document.getElementById("objective").disabled = false;
     document.getElementById("btnsave").hidden = "";
     document.getElementById("btncancel").hidden = "";
-    document.getElementById("btncancel2").hidden = "";
     document.getElementById("btnedit").hidden = "hidden";
   }
   function cancelEdit() {
@@ -95,7 +96,6 @@
     document.getElementById("objective").disabled = true;
     document.getElementById("btnsave").hidden = "hidden";
     document.getElementById("btncancel").hidden = "hidden";
-    document.getElementById("btncancel2").hidden = "hidden";
     document.getElementById("btnedit").hidden = "";
   }
   </script>
