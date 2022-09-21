@@ -74,7 +74,13 @@
     <div class="jumbotron">
         <% joblist.forEach(function(job) { %>
           <div class="form-group2">
-            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)</h3><br>
+            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
+              <% if(typeof job.endyear == "number") { %>
+                <%=job.endyear %>.<%=job.endmonth %>)
+              <% } else { %>
+                present)
+              <% } %>
+            </h3><br>
             <h4>■ <%=job.description %></h4><br>
             ▪ <%=job.detail1 %><br>
             ▪ Skills: <%=job.skills %><br>
@@ -89,7 +95,7 @@
     </div>
 
   </div>
-  
+
 </main>
 </body>
 </html>

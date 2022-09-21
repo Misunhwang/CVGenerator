@@ -44,7 +44,13 @@
           <input type="text" id="formname" name="formname" value="careerForm" hidden>
           <div class="form-group2">
             <input type="text" id="jobid" name="jobid" value="<%=job.jobid %>" hidden>
-            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %>)</h3><br>
+            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
+              <% if(typeof job.endyear == "number") { %>
+                <%=job.endyear %>.<%=job.endmonth %>)
+              <% } else { %>
+                present)
+              <% } %>
+            </h3><br>
             <h4>■ <%=job.description %></h4><br>
             ▪ <%=job.detail1 %><br>
             ▪ Skills: <%=job.skills %><br>
@@ -71,7 +77,13 @@
           <input type="text" id="formname" name="formname" value="educationForm" hidden>
           <div class="form-group2">
             <input type="text" id="educationid" name="educationid" value="<%=education.educationid %>" hidden>
-            <h3><%=education.coursename %> <%=education.degree %> (<%=education.startyear %>.<%=education.startmonth %>)</h3><br>
+            <h3><%=education.coursename %> <%=education.degree %> (<%=education.startyear %>.<%=education.startmonth %> -
+            <% if(typeof education.endyear == "number") { %>
+              <%=education.endyear %>.<%=education.endmonth %>)
+            <% } else {%>
+              present)
+            <% } %>
+            </h3><br>
             <h4><%=education.schoolname %> in <%=education.country %> </h4><br>
             ▪ Grade : <%=education.grade %><br>
             ▪ Special Things : <%=education.special %><br>
