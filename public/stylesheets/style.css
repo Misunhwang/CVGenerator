@@ -1,3 +1,14 @@
+body {
+  background-image: url("/images/career-image25.jpg");
+  background-size: 100%;
+}
+
+/*
+main {
+  display: flow-root !important;
+}
+*/
+
 .form-group {
   width: 100%;
 }
@@ -7,23 +18,27 @@
   background-color: white;
   padding: 15px;
   margin-bottom: 30px;
+  box-sizing: border-box;
 }
 
-.form-group3 {
-  border-radius: 20px;
-  background-color: white;
-  padding: 15px;
+.checkbox-group-body {
+  background-color: aliceblue;
+  padding-left: 10px;
   margin-bottom: 30px;
-  width:90%;
+  position: relative;
+  display: table-cell;
 }
 
 .checkbox-group {
   width:100%;
-  display: inline;
+  display: table;
+  margin-bottom: 10px;
 }
 
 .checkbox-item {
   width:5%;
+  position: relative;
+  display: table-cell;
 }
 
 .button-group {
@@ -36,9 +51,29 @@
   margin-left:10px;
 }
 
-body {
-  background-image: url("/images/career-image11.jpg");
-  background-size: 100%;
+.btn-right {
+  float:right;
+  border-radius: 20px;
+  color: black;
+  font-size: 15px;
+}
+
+.btn-reset {
+  background: none;
+  border-style: unset;
+}
+
+.btn-preview {
+  height: 25px;
+  border-color: darkgreen;
+  font-size: 15px;
+  font-weight: 800;
+  padding-top: 2px !important;
+  /* text-shadow: 2px 2px darkblue; */
+}
+.icon-right {
+  float: right;
+  margin: 5px;
 }
 
 .container {
@@ -46,12 +81,11 @@ body {
 }
 
 .container2 {
-  display: flex;
   justify-content: center;
   background-color: white;
   border-radius: 20px;
-  margin-bottom: 0.5cm;
-  padding: 0.5cm;
+  padding: 10px;
+  margin-top: 20px;
 }
 
 .container3 {
@@ -59,29 +93,14 @@ body {
   border-radius: 20px;
   margin-bottom: 0.5cm;
   padding: 0.5cm;
-  border: 1px solid #dbdddf;
+  /*border: 1px solid #dbdddf;*/
   box-sizing: border-box;
   width: 100%;
-}
-
-.container .jumbotron {
-  padding-top: 10px;
-  padding-left: 10px;
-  background-color: #f6f6f7;
 }
 
 #twodividebox {
 	float:left;
 	width:47%;
-}
-
-#buttonbox {
-  background-color: white;
-  border: 10px solid #6cbad0;
-  border-radius: 40px;
-  text-align: center;
-  margin: 0.5cm;
-  padding: 0.3cm;
 }
 
 label {
@@ -130,4 +149,68 @@ select {
 
 .input-radio {
   width: 15px;
+}
+
+.container .jumbotron {
+  background-color: #dee2e6;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border: 1px solid #dbdddf;
+  box-sizing: border-box;
+}
+
+.container .jumbotron h3 {
+  margin-top: 0px;
+}
+
+.container .jumbotron p {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.page-title {
+  margin-top: 20px;
+  padding: 10px 20px;
+  height: 40px;
+  background-color: slategray;
+  color: white;
+}
+
+.career-title {
+  margin-bottom: 20px;
+}
+
+.career-desc {
+  margin-left: 10px;
+}
+
+.career-detail {
+  margin-left: 30px;
+}
+
+.main-bottom-div1 {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.main-bottom-menu {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  justify-content: center;
+}
+
+.bottom-item {
+  margin: 5px;
+  line-height: 40px;
+  width: calc((100% - 50px) / 3);
+  font-weight: 600;
+  font-size: 20px;
+  list-style: none;
+  background-color: white;
+  border: 5px solid #6cbad0;
+  border-radius: 40px;
+  text-align: center;
+  min-width: 220px;
 }

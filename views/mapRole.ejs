@@ -10,39 +10,38 @@
 </header>
 
 <main>
-  <div class="jumbotron">
-    <h2>Map Role to Career</h2>
-      <form name="mapForm" method="POST">
-        <div class="container3">
-        <input type="text" id="userid" name="userid" value="sunny" hidden>
-        <div class="form-group">
-          <label for="role">Role Title</label>
-          <select name="role" id="role" onChange="checkRole()" class="select-role">
-            <option value="0">-- SELECT --</option>
-            <% rolelist.forEach(function(role) { %>
-              <option value="<%=role.roleid %>"><%=role.rolename %></option>
-            <% }); %>
-          </select>
-        </div>
+  <h4 class="page-title">Map Role to Career</h4>
+  <div class="container3">
+    <form name="mapForm" method="POST">
+      <input type="text" id="userid" name="userid" value="sunny" hidden>
+      <div>
+        <label for="role">Role Title</label>
+        <select name="role" id="role" onChange="checkRole()" class="select-role">
+          <option value="0">-- SELECT --</option>
+          <% rolelist.forEach(function(role) { %>
+            <option value="<%=role.roleid %>"><%=role.rolename %></option>
+          <% }); %>
+        </select>
       </div>
-      <legend>Choose Careers to map</legend>
-      <div class="container3">
-        <fieldset>
-            <% joblist.forEach(function(job) { %>
-              <div class="checkbox-group">
-                <div class="checkbox-item">
-                  <input type="checkbox" name="jobrole" id="<%=job.jobid %>" value="<%=job.jobid %>" class="input-checkbox">
-                </div>
-                <div class="form-group3">
-                  <br>
-                  <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
-                    <% if(typeof job.endyear == "number") { %>
-                      <%=job.endyear %>.<%=job.endmonth %>)
-                    <% } else { %>
-                      present)
-                    <% } %>
-                  </h3><br>
-                  <h4>■ <%=job.description %></h4><br>
+      <hr>
+      <h4><i>Choose Careers to map</i></h4><br>
+      <fieldset>
+          <% joblist.forEach(function(job) { %>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" name="jobrole" id="<%=job.jobid %>" value="<%=job.jobid %>" class="input-checkbox">
+              </div>
+              <div class="checkbox-group-body">
+                <h3 class="career-title">
+                  <%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
+                  <% if(typeof job.endyear == "number") { %>
+                    <%=job.endyear %>.<%=job.endmonth %>)
+                  <% } else { %>
+                    present)
+                  <% } %>
+                </h3>
+                <h4 class="career-desc">■ <%=job.description %></h4>
+                <p class="career-detail">
                   ▪ <%=job.detail1 %><br>
                   ▪ Skills: <%=job.skills %><br>
                   ▪ Sub Roles:
@@ -51,17 +50,17 @@
                       [<%=jobrole.rolename %>]
                     <% } %>
                   <% }); %>
-                  <p></p>
-                </div>
+                </p>
+                <p></p>
               </div>
-            <% }); %>
-        </fieldset>
-        <div class="button-group">
-          <button type="submit" id="btnsave" class="btn btn-primary">Save</button>
-          <button type="reset" onclick="history.go(-1)" id="btncancel" class="btn btn-primary">Cancel</button>
-        </div>
-    </div>
-  </form>
+            </div>
+          <% }); %>
+      </fieldset>
+      <div class="button-group">
+        <button type="submit" id="btnsave" class="btn btn-primary">Save</button>
+        <button type="reset" onclick="history.go(-1)" id="btncancel" class="btn btn-primary">Cancel</button>
+      </div>
+    </form>
 
   </div>
 </main>

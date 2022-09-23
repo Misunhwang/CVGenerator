@@ -10,9 +10,13 @@
 </header>
 
 <main>
-  <div>
+  <h4 class="page-title">
+    View My Tailored CV
+    <button onclick="callPrint('printArea')" id="btnprint" class="btn btn-primary btn-right btn-preview">PRINT</button>
+  </h4>
+
+  <div id="printArea">
     <div class="jumbotron">
-      <h2>View My Tailored CV</h2>
 
       <!--personal info -->
       <div class="form-group2">
@@ -20,7 +24,7 @@
         <h2><%=selectedrole %></h2>
         <%=personalInfo.phone %><br>
         <%=personalInfo.email %><br>
-        <%=personalInfo.linkedin %><br>
+        <%=personalInfo.linkedin %><br><br>
         <h3>Objective</h3><%=personalInfo.objective %><br>
       </div>
 
@@ -73,23 +77,26 @@
     <legend>Work Experience</legend>
     <div class="jumbotron">
         <% joblist.forEach(function(job) { %>
-          <div class="form-group2">
-            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
+          <div class="container3">
+            <h3 class="career-title">
+              <%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
               <% if(typeof job.endyear == "number") { %>
                 <%=job.endyear %>.<%=job.endmonth %>)
               <% } else { %>
                 present)
               <% } %>
-            </h3><br>
-            <h4>■ <%=job.description %></h4><br>
-            ▪ <%=job.detail1 %><br>
-            ▪ Skills: <%=job.skills %><br>
-            ▪ Sub Roles:
-            <% jobrolelist.forEach(function(jobrole) { %>
-              <% if(job.jobid == jobrole.jobid && jobrole.ismain == 0) { %>
-                [<%=jobrole.rolename %>]
-              <% } %>
-            <% }); %>
+            </h3>
+            <h4 class="career-desc">■ <%=job.description %></h4>
+            <p class="career-detail">
+              ▪ <%=job.detail1 %><br>
+              ▪ Skills: <%=job.skills %><br>
+              ▪ Sub Roles:
+              <% jobrolelist.forEach(function(jobrole) { %>
+                <% if(job.jobid == jobrole.jobid && jobrole.ismain == 0) { %>
+                  [<%=jobrole.rolename %>]
+                <% } %>
+              <% }); %>
+            </p>
           </div>
         <% }); %>
     </div>
@@ -97,5 +104,17 @@
   </div>
 
 </main>
+
+  <script>
+function callPrint(printArea) {
+  var printContents = document.getElementById(printArea).innerHTML;
+  var originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+  window.print();
+
+  document.body.innerHTML = originalContents;
+}
+  </script>
 </body>
 </html>

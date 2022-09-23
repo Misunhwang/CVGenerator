@@ -10,61 +10,70 @@
 </header>
 
 <main>
-  <div>
-    <div class="jumbotron">
-      <h2>View My Career</h2>
-      <form method="POST" onsubmit="callSubmit()">
-        <div class="container3">
-          <input type="text" id="formname" name="formname" value="searchForm" hidden>
-          <input type="text" id="userid" name="userid" value="sunny" hidden>
-          <input type="text" id="rolefromserver" name="rolefromserver" value="<%=selectedrole %>" hidden>
-          <div class="form-group">
-            <label for="role">Role Title</label>
-            <select name="role" id="role" onChange="checkRole()" class="select-role">
-              <option value="0">-- All --</option>
-              <% rolelist.forEach(function(role) { %>
-                <% if(role.roleid == Number(selectedrole)) { %>
-                  <option value="<%=role.roleid %>" selected><%=role.rolename %></option>
-                <% } else { %>
-                  <option value="<%=role.roleid %>"><%=role.rolename %></option>
-                <% } %>
-              <% }); %>
-            </select>
-            <button name="submit" value="search" onclick="callSearch()" id="btnsearch">Search</button>
-            <button name="submit" value="preview" onclick="callPreview()" id="btnpreview">Preview CV</button>
-          </div>
-        </div>
-      </form>
+  <form method="POST" onsubmit="callSubmit()">
+    <h4 class="page-title">View My Career
+     <button name="submit" value="preview" onclick="callPreview()" id="btnpreview" class="btn btn-primary btn-right btn-preview">PREVIEW CV</button>
+    </h4>
+
+    <div class="container3">
+      <input type="text" id="formname" name="formname" value="searchForm" hidden>
+      <input type="text" id="userid" name="userid" value="sunny" hidden>
+      <input type="text" id="rolefromserver" name="rolefromserver" value="<%=selectedrole %>" hidden>
+      <div class="form-group">
+        <label for="role">Role Title</label>
+        <select name="role" id="role" onChange="checkRole()" class="select-role">
+          <option value="0">-- All --</option>
+          <% rolelist.forEach(function(role) { %>
+            <% if(role.roleid == Number(selectedrole)) { %>
+              <option value="<%=role.roleid %>" selected><%=role.rolename %></option>
+            <% } else { %>
+              <option value="<%=role.roleid %>"><%=role.rolename %></option>
+            <% } %>
+          <% }); %>
+        </select>
+        <button name="submit" value="search" onclick="callSearch()" id="btnsearch" class="btn-reset"><img src="images/search-icon.png" height="15" alt=""></button>
+      </div>
     </div>
+  </form>
+
 
     <legend>Work Experience</legend>
     <div class="jumbotron">
       <% joblist.forEach(function(job) { %>
         <form method="POST" onsubmit="callSubmit()">
           <input type="text" id="formname" name="formname" value="careerForm" hidden>
+          <div class="icon-right">
+            <button name="submit" class="btn-reset" value="editWork" onclick="callEdit()" id="btnedit"><img src="images/edit-icon.png" height="20" alt="Edit"></button>
+            <button name="submit" class="btn-reset" value="deleteWork" onclick="return callDelete()" id="btndelete"><img src="images/delete-icon.png" height="20" alt="Delete"></button>
+          </div>
           <div class="form-group2">
             <input type="text" id="jobid" name="jobid" value="<%=job.jobid %>" hidden>
-            <h3><%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
+            <h3 class="career-title">
+              <%=job.rolename %>, <%=job.companyname %> in <%=job.country %> (<%=job.startyear %>.<%=job.startmonth %> -
               <% if(typeof job.endyear == "number") { %>
                 <%=job.endyear %>.<%=job.endmonth %>)
               <% } else { %>
                 present)
               <% } %>
-            </h3><br>
-            <h4>■ <%=job.description %></h4><br>
-            ▪ <%=job.detail1 %><br>
-            ▪ Skills: <%=job.skills %><br>
-            ▪ Sub Roles:
-            <% jobrolelist.forEach(function(jobrole) { %>
-              <% if(job.jobid == jobrole.jobid && jobrole.ismain == 0) { %>
-                [<%=jobrole.rolename %>]
-              <% } %>
-            <% }); %>
+            </h3>
+            <h4 class="career-desc">■ <%=job.description %></h4>
+            <p class="career-detail">
+              ▪ <%=job.detail1 %><br>
+              ▪ Skills: <%=job.skills %><br>
+              ▪ Sub Roles:
+              <% jobrolelist.forEach(function(jobrole) { %>
+                <% if(job.jobid == jobrole.jobid && jobrole.ismain == 0) { %>
+                  [<%=jobrole.rolename %>]
+                <% } %>
+              <% }); %>
+            </p>
+            <!--
             <p></p>
             <div class="button-group">
               <button name="submit" value="editWork" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
               <button name="submit" value="deleteWork" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
             </div>
+          -->
           </div>
         </form>
       <% }); %>
@@ -75,23 +84,32 @@
       <% educationlist.forEach(function(education) { %>
         <form method="POST" onsubmit="callSubmit()">
           <input type="text" id="formname" name="formname" value="educationForm" hidden>
+          <div class="icon-right">
+            <button name="submit" class="btn-reset" value="editEducation" id="btnedit"><img src="images/edit-icon.png" height="20" alt="Edit"></button>
+            <button name="submit" class="btn-reset" value="deleteEducation" onclick="return callDelete()" id="btndelete"><img src="images/delete-icon.png" height="20" alt="Delete"></button>
+          </div>
           <div class="form-group2">
             <input type="text" id="educationid" name="educationid" value="<%=education.educationid %>" hidden>
-            <h3><%=education.coursename %> <%=education.degree %> (<%=education.startyear %>.<%=education.startmonth %> -
-            <% if(typeof education.endyear == "number") { %>
-              <%=education.endyear %>.<%=education.endmonth %>)
-            <% } else {%>
-              present)
-            <% } %>
-            </h3><br>
-            <h4><%=education.schoolname %> in <%=education.country %> </h4><br>
-            ▪ Grade : <%=education.grade %><br>
-            ▪ Special Things : <%=education.special %><br>
+            <h3 class="career-title">
+              <%=education.coursename %> <%=education.degree %> (<%=education.startyear %>.<%=education.startmonth %> -
+              <% if(typeof education.endyear == "number") { %>
+                <%=education.endyear %>.<%=education.endmonth %>)
+              <% } else {%>
+                present)
+              <% } %>
+            </h3>
+            <h4 class="career-desc"><%=education.schoolname %> in <%=education.country %> </h4>
+            <p class="career-detail">
+              ▪ Grade : <%=education.grade %><br>
+              ▪ Special Things : <%=education.special %><br>
+            </p>
+            <!--
             <p></p>
             <div class="button-group">
               <button name="submit" value="editEducation" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
               <button name="submit" value="deleteEducation" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
             </div>
+            -->
           </div>
         </form>
       <% }); %>
@@ -102,16 +120,25 @@
       <% certificationlist.forEach(function(certification) { %>
         <form method="POST" onsubmit="callSubmit()">
           <input type="text" id="formname" name="formname" value="certificationForm" hidden>
+          <div class="icon-right">
+            <button name="submit" class="btn-reset" value="editCertification" id="btnedit"><img src="images/edit-icon.png" height="20" alt="Edit"></button>
+            <button name="submit" class="btn-reset" value="deleteCertification" onclick="return callDelete()" id="btndelete"><img src="images/delete-icon.png" height="20" alt="Delete"></button>
+          </div>
           <div class="form-group2">
             <input type="text" id="certificationid" name="certificationid" value="<%=certification.certificationid %>" hidden>
-            <h3><%=certification.certificationname %> (<%=certification.issueyear %>.<%=certification.issuemonth %>)</h3><br>
+            <h3 class="career-title">
+              <%=certification.certificationname %> (<%=certification.issueyear %>.<%=certification.issuemonth %>)
+            </h3>
+            <p class="career-detail">
             ▪ Issued Organization : <%=certification.organization %><br>
             ▪ Description : <%=certification.description %><br>
+            <!--
             <p></p>
             <div class="button-group">
               <button name="submit" value="editCertification" class="btn btn-primary" onclick="callEdit()" id="btnedit">Edit</button>
               <button name="submit" value="deleteCertification" class="btn btn-primary" onclick="return callDelete()" id="btndelete">Delete</button>
             </div>
+            -->
           </div>
         </form>
       <% }); %>

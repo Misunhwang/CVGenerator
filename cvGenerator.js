@@ -47,7 +47,7 @@ app.get('/addEducation', function(req, res, next) {
 });
 
 app.get('/addCareer', function(req, res, next) {
-	var sql = `SELECT * FROM role`;
+	var sql = `SELECT * FROM role ORDER BY rolename`;
 	console.log(sql);
 	db.query(sql, function (err, result) {
 		if (err) throw err;
@@ -57,72 +57,18 @@ app.get('/addCareer', function(req, res, next) {
 });
 
 app.get('/mapRole', function(req, res, next) {
-	var sql = `SELECT * FROM role`;
+	var sql = `SELECT * FROM role ORDER BY rolename`;
 	console.log(sql);
 	db.query(sql, function (err, resultRole) {
 		if (err) throw err;
-		//console.log(resultRole);
 
-//		sql = `SELECT * FROM job WHERE userid="${userid}"`;
 		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
 					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
-					`INNER JOIN role ON jobrole.roleid = role.roleid;`;
+					`INNER JOIN role ON jobrole.roleid = role.roleid ` +
+					`ORDER BY job.startyear desc, job.startmonth desc`;
 		console.log(sql);
 		db.query(sql, function (err, resultJob) {
 			if (err) throw err;
-			//console.log(resultJob);
-
-/*
-			var jobSet = new Set();
-
-
-			Object.keys(resultJob).forEach(function(key) {
-				console.log(key);
-	      var row = resultJob[key];
-
-//				var subrolevalues = "";
-
-//				get_subrole(row.jobid, function(result) {
-//					subrolevalues = result;
-//					console.log("result : " + result);
-//				});
-//				console.log("subrolevalues : " + subrolevalues);
-
-
-	      console.log(row.jobid + "----------------------");
-				sql = `select role.* from role inner join jobrole on role.roleid=jobrole.roleid and jobid=${row.jobid} and ismain=0`;
-				console.log(sql);
-				row.subroles = db.query(sql, function (err, result, next) {
-					if (err) throw err;
-					console.log(result);
-
-					txt = "";
-					if(result.length > 0) {
-						if(result.length == 1) {
-							txt = result[0].rolename;
-						}
-						else {
-							for(var i=0; i<result.length-1; i++) {
-								txt += result[i].rolename + ",";
-							}
-							txt += result[result.length-1].rolename;
-						}
-					}
-
-					return txt;
-
-					//console.log("txt in : " + txt);
-				});
-
-				//console.log("txt out : " + txt);
-				row.subroles = subrolevalues;
-				jobSet.add(row);
-
-			});
-
-			console.log("jobSet.....");
-			console.log(jobSet);
-*/
 
 			sql = `SELECT jobrole.jobid, jobrole.ismain, jobrole.roleid, role.rolename ` +
 						`FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" ` +
@@ -130,43 +76,12 @@ app.get('/mapRole', function(req, res, next) {
 			console.log(sql);
 			db.query(sql, function (err, resultJobrole) {
 				if (err) throw err;
-				//console.log(resultJobrole);
+
 				res.render('mapRole', {title: 'Map Role to Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
 			});
-
-			//res.render('mapRole', {title: 'Map Role to Career', rolelist: resultRole, joblist: jobSet});
 		});
 	});
 });
-
-/*
-function get_subrole(jobid, callback) {
-	console.log(jobid + "----------------------");
-	var sql0 = `select role.* from role inner join jobrole on role.roleid=jobrole.roleid and jobid=${jobid} and ismain=0`;
-	console.log(sql0);
-	db.query(sql0, function (err, result) {
-		if (err) throw err;
-		console.log(result);
-
-		var txt = "";
-		if(result.length > 0) {
-			if(result.length == 1) {
-				txt = result[0].rolename;
-			}
-			else {
-				for(var i=0; i<result.length-1; i++) {
-					txt += result[i].rolename + ",";
-				}
-				txt += result[result.length-1].rolename;
-			}
-		}
-
-		console.log("txt in get_subrole : " + txt);
-		return callback(txt);
-
-	});
-}
-*/
 
 app.get('/viewCareer', function(req, res, next) {
 	var selectedrole = req.query.roleid;
@@ -177,55 +92,48 @@ app.get('/viewCareer', function(req, res, next) {
 		selectedrole = 0;
 	}
 
-	var sql = `SELECT * FROM role`;
+	var sql = `SELECT * FROM role ORDER BY rolename`;
 	console.log(sql);
 	db.query(sql, function (err, resultRole) {
 		if (err) throw err;
-		//console.log(resultRole);
 
 		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
 					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
-					`INNER JOIN role ON jobrole.roleid = role.roleid`;
+					`INNER JOIN role ON jobrole.roleid = role.roleid `;
 		if(selectedrole > 0) {
-			sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
-			//sql += ` AND jobrole.roleid = ${selectedrole}`;
+			sql += `INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid `;
 		}
+		sql += `ORDER BY job.startyear desc, job.startmonth desc`;
 		console.log(sql);
 		db.query(sql, function (err, resultJob) {
 			if (err) throw err;
-			console.log(resultJob);
 
  			sql = `SELECT jobrole.jobid, jobrole.ismain, jobrole.roleid, role.rolename ` +
 						`FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" ` +
 						`inner join role ON jobrole.roleid = role.roleid`;
 			if(selectedrole > 0) {
 				sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
-				//sql += ` AND jobrole.roleid = ${selectedrole}`;
 			}
 			sql += ` order by 1, 2 desc`;
 			console.log(sql);
 			db.query(sql, function (err, resultJobrole) {
 				if (err) throw err;
-				console.log(resultJobrole);
 
-				sql = `SELECT * FROM education WHERE userid="${userid}" `;
+				sql = `SELECT * FROM education WHERE userid="${userid}" ` +
+							`ORDER BY startyear desc, startmonth desc`;
 				console.log(sql);
 				db.query(sql, function (err, resultEducation) {
 					if (err) throw err;
-					console.log(resultEducation);
 
-					sql = `SELECT * FROM certification WHERE userid="${userid}" `;
+					sql = `SELECT * FROM certification WHERE userid="${userid}" ` +
+								`ORDER BY issueyear desc, issuemonth desc`;
 					console.log(sql);
 					db.query(sql, function (err, resultCertification) {
 						if (err) throw err;
-						console.log(resultCertification);
+
 						res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation, certificationlist: resultCertification, selectedrole: selectedrole});
 					});
-
-					//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation});
 				});
-
-				//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
 			});
 		});
 	});
@@ -248,11 +156,12 @@ app.get('/previewCV', function(req, res, next) {
 
 		sql = `SELECT job.*, jobrole.roleid, role.rolename FROM job ` +
 					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.userid="${userid}" ` +
-					`INNER JOIN role ON jobrole.roleid = role.roleid`;
+					`INNER JOIN role ON jobrole.roleid = role.roleid `;
 		if(selectedrole > 0) {
-			sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
+			sql += `INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid `;
 			//sql += ` AND jobrole.roleid = ${selectedrole}`;
 		}
+		sql += `ORDER BY job.startyear desc, job.startmonth desc`;
 		console.log(sql);
 		db.query(sql, function (err, resultJob) {
 			if (err) throw err;
@@ -271,23 +180,22 @@ app.get('/previewCV', function(req, res, next) {
 				if (err) throw err;
 				console.log(resultJobrole);
 
-				sql = `SELECT * FROM education WHERE userid="${userid}" `;
+				sql = `SELECT * FROM education WHERE userid="${userid}" ` +
+							`ORDER BY startyear desc, startmonth desc`;
 				console.log(sql);
 				db.query(sql, function (err, resultEducation) {
 					if (err) throw err;
-					console.log(resultEducation);
 
 					sql = `SELECT * FROM certification WHERE userid="${userid}" `;
+								`ORDER BY issueyear desc, issuemonth desc`;
 					console.log(sql);
 					db.query(sql, function (err, resultCertification) {
 						if (err) throw err;
-						console.log(resultCertification);
 
 						sql = `SELECT distinct skill FROM jobskill WHERE userid="${userid}" `;
 						console.log(sql);
 						db.query(sql, function (err, resultSkill) {
 							if (err) throw err;
-							console.log(resultSkill);
 
 							if(selectedrole > 0) {
 								sql = `SELECT rolename FROM role WHERE roleid="${selectedrole}" `;
@@ -313,14 +221,8 @@ app.get('/previewCV', function(req, res, next) {
 																															selectedrole: ""});
 							}
 						});
-
-						//res.render('previewCV', {title: 'Preview CV', personalInfo: resultUser, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation, certificationlist: resultCertification, selectedrole: selectedrole});
 					});
-
-					//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole, educationlist: resultEducation});
 				});
-
-				//res.render('viewCareer', {title: 'View Career', rolelist: resultRole, joblist: resultJob, jobrolelist: resultJobrole});
 			});
 		});
 	});
@@ -329,26 +231,21 @@ app.get('/previewCV', function(req, res, next) {
 app.get('/editCareer', function(req, res, next) {
 	var selectedjob = Number(req.query.jobid);
 
-	var sql = `SELECT * FROM role`;
+	var sql = `SELECT * FROM role ORDER BY rolename`;
 	console.log(sql);
 	db.query(sql, function (err, resultRole) {
 		if (err) throw err;
-		//console.log(resultRole);
 
-//		sql = `SELECT * FROM job WHERE jobid=${selectedjob} `;
 		sql = `SELECT job.*, jobrole.roleid FROM job ` +
 					`INNER JOIN jobrole ON job.jobid=jobrole.jobid and jobrole.ismain=1 and job.jobid=${selectedjob} `;
 		console.log(sql);
 		db.query(sql, function (err, resultJob) {
 			if (err) throw err;
-			console.log(resultJob);
 
-//			sql = `SELECT * FROM jobrole WHERE jobid=${selectedjob} `;
  			sql = `SELECT roleid FROM jobrole WHERE ismain=0 and jobid=${selectedjob} `;
 			console.log(sql);
 			db.query(sql, function (err, resultSubrole) {
 				if (err) throw err;
-				console.log(resultSubrole);
 
 				res.render('editCareer', {title: 'Edit Career', rolelist: resultRole, jobInfo: resultJob[0], subrolelist: resultSubrole});
 			});
@@ -363,7 +260,6 @@ app.get('/editEducation', function(req, res, next) {
 	console.log(sql);
 	db.query(sql, function (err, result) {
 		if (err) throw err;
-		console.log(result);
 		res.render('editEducation', {title: 'Edit Education', educationInfo: result[0]});
 	});
 });
@@ -375,7 +271,6 @@ app.get('/editCertification', function(req, res, next) {
 	console.log(sql);
 	db.query(sql, function (err, result) {
 		if (err) throw err;
-		console.log(result);
 		res.render('editCertification', {title: 'Edit Certification', certificationInfo: result[0]});
 	});
 });

@@ -10,92 +10,90 @@
 </header>
 
 <main>
-  <div class="jumbotron">
-    <h2>Edit Education</h2>
-    <div class="container3">
-      <form name="eduForm" method="POST" onsubmit="return validateForm()">
-        <input type="text" id="userid" name="userid" value="sunny" hidden>
-        <input type="text" id="educationid" name="educationid" value="<%=educationInfo.educationid %>" hidden>
-        <div class="form-group">
-          <label for="schoolname">School Name</label>
-          <input type="text" id="schoolname" name="schoolname" value="<%=educationInfo.schoolname %>">
-        </div>
-        <div class="form-group">
-          <label for="country">Country</label>
-          <input type="text" id="country" name="country" value="<%=educationInfo.country %>">
-        </div>
-        <div class="form-group">
-          <label for="coursename">Course Name</label>
-          <input type="text" id="coursename" name="coursename" value="<%=educationInfo.coursename %>">
-        </div>
-        <div class="form-group">
-          <label for="degree">Degree</label>
-          <input type="text" id="degree" name="degree" value="<%=educationInfo.degree %>">
-        </div>
-        <div class="form-group">
-          <label id='studyDate'>Study Date</label>
-          <select name="startMonth" id="startMonth" aria-labelledby='studyDate'>
-            <option value="month">--Month--</option>
-            <% for (var i =1; i <=12;  i++ ) { %>
-              <% if(i == educationInfo.startmonth) { %>
-                <option value="<%=i %>" selected><%=i %></option>
-              <% } else { %>
-                <option value="<%=i %>"><%=i %></option>
-              <% } %>
+  <h4 class="page-title">Edit Education</h4>
+  <div class="container3">
+    <form name="eduForm" method="POST" onsubmit="return validateForm()">
+      <input type="text" id="userid" name="userid" value="sunny" hidden>
+      <input type="text" id="educationid" name="educationid" value="<%=educationInfo.educationid %>" hidden>
+      <div class="form-group">
+        <label for="schoolname">School Name</label>
+        <input type="text" id="schoolname" name="schoolname" value="<%=educationInfo.schoolname %>">
+      </div>
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" value="<%=educationInfo.country %>">
+      </div>
+      <div class="form-group">
+        <label for="coursename">Course Name</label>
+        <input type="text" id="coursename" name="coursename" value="<%=educationInfo.coursename %>">
+      </div>
+      <div class="form-group">
+        <label for="degree">Degree</label>
+        <input type="text" id="degree" name="degree" value="<%=educationInfo.degree %>">
+      </div>
+      <div class="form-group">
+        <label id='studyDate'>Study Date</label>
+        <select name="startMonth" id="startMonth" aria-labelledby='studyDate'>
+          <option value="month">--Month--</option>
+          <% for (var i =1; i <=12;  i++ ) { %>
+            <% if(i == educationInfo.startmonth) { %>
+              <option value="<%=i %>" selected><%=i %></option>
+            <% } else { %>
+              <option value="<%=i %>"><%=i %></option>
             <% } %>
-          </select>
-          <select name="startYear" id="startYear" aria-labelledby='studyDate'>
-            <option value="year">--Year--</option>
-            <% for (var i =2022; i >= 1970;  i-- ) { %>
-              <% if(i == educationInfo.startyear) { %>
-                <option value="<%=i %>" selected><%=i %></option>
-              <% } else { %>
-                <option value="<%=i %>"><%=i %></option>
-              <% } %>
-            <% } %>
-          </select>
-          -
-          <select name="endMonth" id="endMonth" aria-labelledby='studyDate'>
-            <option value="month">--Month--</option>
-            <% for (var i =1; i <=12;  i++ ) { %>
-              <% if(i == educationInfo.endmonth) { %>
-                <option value="<%=i %>" selected><%=i %></option>
-              <% } else { %>
-                <option value="<%=i %>"><%=i %></option>
-              <% } %>
-            <% } %>
-          </select>
-          <select name="endYear" id="endYear" aria-labelledby='studyDate'>
-            <option value="year">--Year--</option>
-            <% for (var i =2022; i >= 1970;  i-- ) { %>
-              <% if(i == educationInfo.endyear) { %>
-                <option value="<%=i %>" selected><%=i %></option>
-              <% } else { %>
-                <option value="<%=i %>"><%=i %></option>
-              <% } %>
-            <% } %>
-          </select>
-          <% if(typeof educationInfo.endyear == "number") { %>
-            <input type="checkbox" id="notFinish" name="notFinish" onclick="checkNotFinish()" class="input-checkbox">
-          <% } else {%>
-            <input type="checkbox" id="notFinish" name="notFinish" onclick="checkNotFinish()" class="input-checkbox" checked>
           <% } %>
-          <label for="notFinish" class="label-checkbox">currently studying in this field</label>
-        </div>
-        <div class="form-group">
-          <label for="grade">Grade</label>
-          <input type="text" id="grade" name="grade" value="<%=educationInfo.grade %>">
-        </div>
-        <div class="form-group">
-          <label for="special">Special Things</label>
-          <input type="text" id="special" name="special" value="<%=educationInfo.special %>">
-        </div>
-        <div class="button-group">
-          <button type="submit" id="btnsave" class="btn btn-primary">Save</button>
-          <button type="reset" onclick="history.go(-1)" id="btncancel" class="btn btn-primary">Cancel</button>
-        </div>
-      </form>
-    </div>
+        </select>
+        <select name="startYear" id="startYear" aria-labelledby='studyDate'>
+          <option value="year">--Year--</option>
+          <% for (var i =2022; i >= 1970;  i-- ) { %>
+            <% if(i == educationInfo.startyear) { %>
+              <option value="<%=i %>" selected><%=i %></option>
+            <% } else { %>
+              <option value="<%=i %>"><%=i %></option>
+            <% } %>
+          <% } %>
+        </select>
+        -
+        <select name="endMonth" id="endMonth" aria-labelledby='studyDate'>
+          <option value="month">--Month--</option>
+          <% for (var i =1; i <=12;  i++ ) { %>
+            <% if(i == educationInfo.endmonth) { %>
+              <option value="<%=i %>" selected><%=i %></option>
+            <% } else { %>
+              <option value="<%=i %>"><%=i %></option>
+            <% } %>
+          <% } %>
+        </select>
+        <select name="endYear" id="endYear" aria-labelledby='studyDate'>
+          <option value="year">--Year--</option>
+          <% for (var i =2022; i >= 1970;  i-- ) { %>
+            <% if(i == educationInfo.endyear) { %>
+              <option value="<%=i %>" selected><%=i %></option>
+            <% } else { %>
+              <option value="<%=i %>"><%=i %></option>
+            <% } %>
+          <% } %>
+        </select>
+        <% if(typeof educationInfo.endyear == "number") { %>
+          <input type="checkbox" id="notFinish" name="notFinish" onclick="checkNotFinish()" class="input-checkbox">
+        <% } else {%>
+          <input type="checkbox" id="notFinish" name="notFinish" onclick="checkNotFinish()" class="input-checkbox" checked>
+        <% } %>
+        <label for="notFinish" class="label-checkbox">currently studying in this field</label>
+      </div>
+      <div class="form-group">
+        <label for="grade">Grade</label>
+        <input type="text" id="grade" name="grade" value="<%=educationInfo.grade %>">
+      </div>
+      <div class="form-group">
+        <label for="special">Special Things</label>
+        <input type="text" id="special" name="special" value="<%=educationInfo.special %>">
+      </div>
+      <div class="button-group">
+        <button type="submit" id="btnsave" class="btn btn-primary">Save</button>
+        <button type="reset" onclick="history.go(-1)" id="btncancel" class="btn btn-primary">Cancel</button>
+      </div>
+    </form>
   </div>
 </main>
 
