@@ -3,8 +3,8 @@
 <head>
   <%- include('./partials/head'); %>
 </head>
-<body class="container">
 
+<body class="container">
 <header>
   <%- include('./partials/header'); %>
 </header>
@@ -121,50 +121,52 @@
   </div>
 </main>
 
-  <script>
-  function checkNotFinish() {
-    var isContinue = document.getElementById("notFinish").checked;
-    if(isContinue) {
-      document.getElementById("endMonth").disabled = true;
-      document.getElementById("endYear").disabled = true;
-    } else {
-      document.getElementById("endMonth").disabled = false;
-      document.getElementById("endYear").disabled = false;
-    }
+<script>
+function checkNotFinish() {
+  var isContinue = document.getElementById("notFinish").checked;
+  if(isContinue) {
+    document.getElementById("endMonth").disabled = true;
+    document.getElementById("endYear").disabled = true;
+  } else {
+    document.getElementById("endMonth").disabled = false;
+    document.getElementById("endYear").disabled = false;
+  }
+}
+
+function validateForm() {
+  var eYear = document.getElementById("endYear").value;
+  var eMonth = document.getElementById("endMonth").value;
+  var sYear = document.getElementById("startYear").value;
+  var sMonth = document.getElementById("startMonth").value;
+  var isContinue = document.getElementById("notFinish").checked;
+
+  if(sYear == "year" || sMonth == "month") {
+    alert("Please select the correct start date.");
+    return false;
   }
 
-  function validateForm() {
-    var eYear = document.getElementById("endYear").value;
-    var eMonth = document.getElementById("endMonth").value;
-    var sYear = document.getElementById("startYear").value;
-    var sMonth = document.getElementById("startMonth").value;
-    var isContinue = document.getElementById("notFinish").checked;
-
-    if(sYear == "year" || sMonth == "month") {
-      alert("Please select the correct start date.");
+  if(!isContinue) {
+    if(eYear == "year" || eMonth == "month") {
+      alert("Please select the correct end date.");
       return false;
     }
 
-    if(!isContinue) {
-      if(eYear == "year" || eMonth == "month") {
-        alert("Please select the correct end date.");
-        return false;
-      }
-
-      if(eYear < sYear) {
-        alert("End year must be later than start year.");
-        return false;
-      } else {
-        if (eYear == sYear && eMonth < sMonth) {
-            alert("End month must be later than start month.");
-            return false;
-        }
+    if(eYear < sYear) {
+      alert("End year must be later than start year.");
+      return false;
+    } else {
+      if (eYear == sYear && eMonth < sMonth) {
+          alert("End month must be later than start month.");
+          return false;
       }
     }
   }
-  </script>
+}
+</script>
+
 <footer>
   <%- include('./partials/footer'); %>
 </footer>
 </body>
+
 </html>

@@ -3,8 +3,8 @@
 <head>
   <%- include('./partials/head'); %>
 </head>
-<body class="container">
 
+<body class="container">
 <header>
   <%- include('./partials/header'); %>
 </header>
@@ -57,49 +57,50 @@
   </div>
 </main>
 
-  <script>
-    var phoneOrigin = "";
-    var emailOrigin = "";
-    var linkedinOrigin = "";
-    var websiteOrigin = "";
-    var objectiveOrigin = "";
+<script>
+  var phoneOrigin = "";
+  var emailOrigin = "";
+  var linkedinOrigin = "";
+  var websiteOrigin = "";
+  var objectiveOrigin = "";
 
-  function callEdit() {
-    phoneOrigin = document.getElementById("phone").value;
-    emailOrigin = document.getElementById("email").value;
-    linkedinOrigin = document.getElementById("linkedin").value;
-    websiteOrigin = document.getElementById("website").value;
-    objectiveOrigin = document.getElementById("objective").value;
+function callEdit() {
+  phoneOrigin = document.getElementById("phone").value;
+  emailOrigin = document.getElementById("email").value;
+  linkedinOrigin = document.getElementById("linkedin").value;
+  websiteOrigin = document.getElementById("website").value;
+  objectiveOrigin = document.getElementById("objective").value;
 
-    //document.getElementById("userid").disabled = false;
-    document.getElementById("phone").disabled = false;
-    document.getElementById("email").disabled = false;
-    document.getElementById("linkedin").disabled = false;
-    document.getElementById("website").disabled = false;
-    document.getElementById("objective").disabled = false;
-    document.getElementById("btnsave").hidden = "";
-    document.getElementById("btncancel").hidden = "";
-    document.getElementById("btnedit").hidden = "hidden";
-  }
-  function cancelEdit() {
-    document.getElementById("phone").value = phoneOrigin;
-    document.getElementById("email").value = emailOrigin;
-    document.getElementById("linkedin").value = linkedinOrigin;
-    document.getElementById("website").value = websiteOrigin;
-    document.getElementById("objective").value = objectiveOrigin;
+  //document.getElementById("userid").disabled = false;
+  document.getElementById("phone").disabled = false;
+  document.getElementById("email").disabled = false;
+  document.getElementById("linkedin").disabled = false;
+  document.getElementById("website").disabled = false;
+  document.getElementById("objective").disabled = false;
+  document.getElementById("btnsave").hidden = "";
+  document.getElementById("btncancel").hidden = "";
+  document.getElementById("btnedit").hidden = "hidden";
+}
+function cancelEdit() {
+  document.getElementById("phone").value = phoneOrigin;
+  document.getElementById("email").value = emailOrigin;
+  document.getElementById("linkedin").value = linkedinOrigin;
+  document.getElementById("website").value = websiteOrigin;
+  document.getElementById("objective").value = objectiveOrigin;
 
-    document.getElementById("phone").disabled = true;
-    document.getElementById("email").disabled = true;
-    document.getElementById("linkedin").disabled = true;
-    document.getElementById("website").disabled = true;
-    document.getElementById("objective").disabled = true;
-    document.getElementById("btnsave").hidden = "hidden";
-    document.getElementById("btncancel").hidden = "hidden";
-    document.getElementById("btnedit").hidden = "";
-  }
-  </script>
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
+  document.getElementById("phone").disabled = true;
+  document.getElementById("email").disabled = true;
+  document.getElementById("linkedin").disabled = true;
+  document.getElementById("website").disabled = true;
+  document.getElementById("objective").disabled = true;
+  document.getElementById("btnsave").hidden = "hidden";
+  document.getElementById("btncancel").hidden = "hidden";
+  document.getElementById("btnedit").hidden = "";
+}
+</script>
+<footer>
+  <%- include('./partials/footer'); %>
+</footer>
 </body>
+
 </html>

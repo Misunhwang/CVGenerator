@@ -3,8 +3,8 @@
 <head>
   <%- include('./partials/head'); %>
 </head>
-<body class="container">
 
+<body class="container">
 <header>
   <%- include('./partials/header'); %>
 </header>
@@ -100,12 +100,10 @@
           </div>
         <% }); %>
     </div>
-
   </div>
-
 </main>
 
-  <script>
+<script>
 function callPrint(printArea) {
   var printContents = document.getElementById(printArea).innerHTML;
   var originalContents = document.body.innerHTML;
@@ -115,9 +113,10 @@ function callPrint(printArea) {
 
   document.body.innerHTML = originalContents;
 }
-  </script>
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
+</script>
+<footer>
+  <%- include('./partials/footer'); %>
+</footer>
 </body>
+
 </html>

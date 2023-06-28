@@ -172,7 +172,6 @@ app.get('/previewCV', function(req, res, next) {
 						`inner join role ON jobrole.roleid = role.roleid`;
 			if(selectedrole > 0) {
 				sql += ` INNER JOIN (SELECT DISTINCT JOBID FROM JOBROLE WHERE roleid=${selectedrole}) distjob on job.jobid = distjob.jobid`;
-				//sql += ` AND jobrole.roleid = ${selectedrole}`;
 			}
 			sql += ` order by 1, 2 desc`;
 			console.log(sql);
@@ -529,25 +528,6 @@ app.post('/addCareer', function(req, res, next) {
 				console.log('jobskill record inserted');
 			});
 		}
-
-/*
-			sql = `SELECT * FROM jobskill WHERE jobid = ${insertid} and  skill = "${uniqueSkillarray[j]}"`;
-			console.log(sql);
-		  db.query(sql, function(err, result) {
-		    if(err) throw err;
-
-				if(result.length == 0) {
-					sql = `INSERT INTO jobskill (jobid, skill, userid)
-								 VALUES (${insertid}, "${uniqueSkillarray[j]}", "${userid}")`;
-					console.log(sql);
-					db.query(sql, function(err, result) {
-						if (err) throw err;
-						console.log('jobskill record inserted');
-					});
-				};
-			});
-*/
-
 		res.render('home');
 	});
 });
@@ -617,23 +597,6 @@ app.post('/editCareer', function(req, res, next) {
 
 	var uniqueSkillarray = [ ...new Set(skillarray)]; //remove duplicate skill
 
-/*
-	sql = `SELECT skill FROM jobskill WHERE jobid=${jobid}`;
-
-	console.log(sql);
-	db.query(sql, function(err, result) {
-		if (err) throw err;
-		console.log(result);
-
-		var originSkillArray = [];
-		for(var i=0; i<result.length; i++) {
-			originSkillArray.push(result[i].skill);
-		}
-
-
-	});
-*/
-
 	for(var j=0; j<uniqueSkillarray.length; j++) {
 		console.log("for skill : " + uniqueSkillarray[j]);
 
@@ -699,7 +662,6 @@ app.post('/editCareer', function(req, res, next) {
 	});
 
 	res.redirect('/viewCareer');
-	//res.render('home');
 });
 
 app.post('/deleteCareer', function(req, res, next) {
@@ -711,30 +673,6 @@ app.post('/deleteCareer', function(req, res, next) {
 	sql = `DELETE FROM jobrole WHERE jobid=${jobid}`;
 
 	console.log(sql);
-/*
-	db.query(sql, function(err, result) {
-		if (err) throw err;
-		console.log("jobrole delete succeed");
-	});
-
-	//2. Delete jobskill
-	sql = `DELETE FROM jobskill WHERE jobid=${jobid}`;
-
-	console.log(sql);
-	db.query(sql, function(err, result) {
-		if (err) throw err;
-		console.log("jobskill delete succeed");
-	});
-
-	//3. Delete job
-	sql = `DELETE FROM job WHERE jobid=${jobid}`;
-
-	console.log(sql);
-	db.query(sql, function(err, result) {
-		if (err) throw err;
-		console.log("job delete succeed");
-	});
-*/
 	res.redirect('/viewCareer');
 });
 
@@ -760,17 +698,6 @@ app.post('/mapRole', function(req, res, next) {
 			rolejobArray.push(Number(rolejoblist));
 		}
 	}
-
-	//console.log(rolejobArray);
-
-/*
-	var temp = "1,2,3,";
-	var testArray = temp.split(",");
-	console.log(testArray.length);
-	testArray = testArray.slice(0, -1);
-	console.log(testArray.length);
-	console.log(testArray);
-*/
 
 	sql = `SELECT jobrole.jobid FROM jobrole inner join job on jobrole.jobid = job.jobid and job.userid="${userid}" and jobrole.roleid = ${roleid}`;
 
